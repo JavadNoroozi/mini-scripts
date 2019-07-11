@@ -1,0 +1,20 @@
+#! /bin/csh -fv
+name=$1
+
+cd $name/RNH2/fe_calc/
+gmx bar -f RNH2*.xvg -o -oi -oh -b 500 >$name"_RNH2_result.txt"
+cp $name"_RNH2_result.txt" ../../../result
+
+cd ../../RNH3/fe_calc
+gmx bar -f RNH3*.xvg -o -oi -oh -b 500 >$name"_RNH3_result.txt"
+cp $name"_RNH3_result.txt" ../../../result
+
+cd ../../RNHCOO/fe_calc
+gmx bar -f RNHCOO*.xvg -o -oi -oh -b 500 >$name"_RNHCOO_result.txt"
+cp $name"_RNHCOO_result.txt" ../../../result
+
+
+
+cd ../../../
+
+
