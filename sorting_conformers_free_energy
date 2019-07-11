@@ -1,0 +1,52 @@
+import shutil
+import glob
+import os
+thedir = '/scratch/javad/carbamate'
+#P =[ name for name in os.listdir(thedir) if os.path.isdir(os.path.join(thedir, name)) ]
+#P= ['1AP', '2AEE', 'AEA', 'SAPD', 'TBAE', 'DIPA','THMAM', 'MMEA', 'MMEA2', 'MMEA3','MMEA4','MMEA5','MMEA6', 'DEA']
+P= ['n-CHEA']
+
+
+
+for i in range(0, len(P)):
+    os.chdir(thedir+'/'+P[i])
+    print("Current Working Directory " , os.getcwd())
+    CO2_files = len(glob.glob1(thedir+'/'+P[i], "*_CO2*.com"))
+    Num_of_log_files = CO2_files
+    mol_prefix = P[i]+"_CO2"
+    f2 = open('Free_Energy', 'w')
+    LOG=0
+    for j in range(Num_of_log_files):
+        f1 = open(mol_prefix + str(j+1) + '.mol2.log', 'r')
+        lines = f1.readlines()
+        if "Normal termination of Gaussian" in lines[len(lines)-1]:
+            LOG=LOG+1
+            for k in range(len(lines)):
+                if 'Sum of electronic and thermal Free Energies=' in lines[k]:
+                    f2.write(lines[k][54:65])
+                    f2.write('\n')
+        else:
+            f2.write('1111111111111.11111111111')
+            f2.write('\n')
+        f1.close()
+    f2.close()
+    
+    integers = open('Free_Energy', 'r')
+    values = [float(x) for x in integers.readlines()]
+    print('successful log files are :', CO2_files, LOG)
+    keys = range(1,len(values))
+    dictionary = dict(zip(keys, values))
+    #print(dictionary)
+    for K, V in dictionary.items():
+          if dictionary [K] == min(values):
+             conformer = K
+    print(' minimum conformer is:',conformer)
+    print(' min energy is:', min(values))
+    dir1= thedir+'/min/'
+    dir2= thedir+'/'+P[i]+'/'+P[i]+'_CO2'+str(conformer)+'.mol2.log'
+    shutil.copy(dir2,dir1)
+
+
+
+
+
