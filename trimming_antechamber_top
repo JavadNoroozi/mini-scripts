@@ -1,0 +1,17 @@
+import os
+directory = '/home/javad/Desktop/ANTECHAMBER/amines/using_PM6_min_geo/itp'
+
+for filename in os.listdir(directory):
+    if filename.endswith(".txt"):
+        f1 = open(filename, 'r')
+        lines = f1.readlines()
+        n_lines = len(lines)
+        for i in range(0, n_lines):
+            if lines[i] == '[ moleculetype ]\n':
+                start = i
+            if lines[i] == '[ system ]\n':
+                end = i
+        f2 = open(filename, 'w')
+        for i in range(start, end):
+            f2.write(str(lines[i]))
+        f2.close()
