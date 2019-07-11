@@ -1,0 +1,16 @@
+#! /bin/csh -fv
+name=$1
+
+ cd $name/RNH2/fe_calc/
+rm RNH2.* slurm* alchemy.sh bar* histogram.xvg
+sbatch --array=0-25 batch_fe_0_25.sh
+cd ../../RNH3/fe_calc
+rm RNH3.* slurm* alchemy.sh bar* histogram.xvg
+sbatch --array=0-25 batch_fe_0_25.sh
+
+cd ../../RNHCOO/fe_calc
+rm RNHCOO.* slurm* alchemy.sh bar* histogram.xvg
+sbatch --array=0-25 batch_fe_0_25.sh
+cd ../../../
+
+
