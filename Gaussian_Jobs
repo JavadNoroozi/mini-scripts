@@ -1,0 +1,22 @@
+#! /bin/csh -fv
+name=$1
+cd $name
+rm *.log *.sh Free_Energy
+
+cp ../job.sh $name"_CO2.sh"
+
+
+sed --i 's/#p.*/#p G3 Opt=tight Freq pressure=0.987 temp=298.15/g' *.com
+sed --i 's/%NProcShared=.*/%NProcShared=10/g' *.com
+sed --i 's/%Mem=.*/%Mem=15GB/g' *.com
+
+
+
+sed --i "s/XXX/$name"_CO2"/g" $name"_CO2.sh"
+
+
+pro=$(ls -dq *.com | wc -l)
+echo $pro
+
+sbatch --array=1-$pro $name"_CO2.sh"
+
