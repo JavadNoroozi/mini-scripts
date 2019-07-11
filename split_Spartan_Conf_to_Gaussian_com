@@ -1,0 +1,26 @@
+#!/bin/sh
+
+# Gaussian Calculation setup for conformers
+# mol2 file of conformers bundle need to obtained from spartan MM simulations
+# the number of conformers need to be changed in the python script that split the spartan out put
+# babel writes gaussiam .com files for given method, careful about the charge and multipilicity
+
+ipython split.py
+
+
+
+for f in *.mol2;  do babel -i mol2 $f -o com $f.com ; done;
+
+# heading settings
+
+sed --i 's/#Put Keywords Here, check Charge and Multiplicity./#n G4 Opt=tight Freq pressure=0.987 temp=298.15 /g' *.com
+sed -i '1 i\%NProcShared=2' *.com 
+sed -i '2 i\%Mem=2GB' *.com 
+
+mkdir com
+mv *.com com
+mkdir mol2
+mv *.mol2 mol2
+
+
+
