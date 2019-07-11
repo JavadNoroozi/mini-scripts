@@ -1,0 +1,28 @@
+#! /bin/csh -fv
+name=$1
+
+
+
+
+####### parent directory
+cp -r DIRECTORY $name
+cd $name
+
+cd RNH2/initial_conf
+sed --i "s/XXX/$name/g" System_ff.top RNH2_pack.in
+packmol <RNH2_pack.in
+babel -i xyz RNH2_pack.xyz -o pdb RNH2_pack.pdb
+cd ../../
+
+cd RNH3/initial_conf
+sed --i "s/XXX/$name"H"/g" System_ff.top RNH3_pack.in
+packmol <RNH3_pack.in
+babel -i xyz RNH3_pack.xyz -o pdb RNH3_pack.pdb
+cd ../../
+
+
+cd RNHCOO/initial_conf
+sed --i "s/XXX/$name"_CO2"/g" System_ff.top RNHCOO_pack.in
+packmol <RNHCOO_pack.in
+babel -i xyz RNHCOO_pack.xyz -o pdb RNHCOO_pack.pdb
+cd ../../
