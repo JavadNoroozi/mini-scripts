@@ -1,0 +1,36 @@
+#! /bin/csh -fv
+name=$1
+
+cd $name/RNH2/initial_conf
+rm RNH2_min.* *# step*
+sh initial_config.sh
+
+cd ../npt_production/
+rm RNH2_npt.* *# step*
+cd ../npt_berendsen/
+rm RNH2_npt.* *# step* slurm*
+sbatch npt_run.sh
+
+
+
+cd ../../RNH3/initial_conf
+rm RNH3_min.* *# step*
+sh initial_config.sh
+
+cd ../npt_production/
+rm RNH3_npt.* *# step*
+cd ../npt_berendsen/
+rm RNH3_npt.* *# step* slurm*
+sbatch npt_run.sh
+
+cd ../../RNHCOO/initial_conf
+sh initial_config.sh
+rm RNHCOO_min.* *# step*
+cd ../npt_production/
+rm RNHCOO_npt.* *# step*
+cd ../npt_berendsen/
+rm RNHCOO_npt.* *# step* slurm*
+sbatch npt_run.sh
+
+cd ../../../
+
