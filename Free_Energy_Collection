@@ -22,3 +22,42 @@ for i in range(0, len(P)):
             f1.close()
     f2.close()
 
+
+
+
+
+
+
+
+
+
+
+
+import glob
+import os
+thedir = '/scratch/javad/QM/G3/set2'
+P =[ name for name in os.listdir(thedir) if os.path.isdir(os.path.join(thedir, name)) ]
+
+
+for i in range(0, len(P)):
+    os.chdir(thedir+'/'+P[i])
+    print("Current Working Directory " , os.getcwd())
+    tot_files = len(glob.glob1(thedir+'/'+P[i],"*.com"))
+    H_files = len(glob.glob1(thedir+'/'+P[i], "*H*.com"))
+    N_files= tot_files - H_files
+    print(N_files)
+    print(H_files)
+    Num_of_log_files = H_files
+    mol_prefix = P[i]+"H"
+    f2 = open('Free_Energy_H', 'w')
+    for i in range(Num_of_log_files):
+        f1 = open(mol_prefix + str(i+1) + '.mol2.log', 'r')
+        lines = f1.readlines()
+        for i in range(len(lines)):
+            if 'G3 Free Energy=' in lines[i]:
+                f2.write(lines[i][66:77])
+                f2.write('\n')
+            f1.close()
+    f2.close()
+
+
