@@ -1,0 +1,8 @@
+module load openbabel
+
+for f in *.log;  do obabel -i g98 $f -o com > ${f%.*}.com ; done;
+
+ # Gaussian heading settings
+ sed --i 's/!Put Keywords Here, check Charge and Multiplicity./#n HF\/6-31G* SCF=Tight Pop=MK IOp(6\/33=2,6\/41=10,6\/42=17)/g' *.com
+ #sed -i '1 i\%NProcShared=4' *.com
+ #sed -i '2 i\%Mem=5GB' *.com
